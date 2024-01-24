@@ -1,0 +1,7 @@
+services:
+    Geekabel\SymfonyStrapi\Strapi\Client:
+        class: Geekabel\SymfonyStrapi\Strapi\Client
+        arguments:
+            $httpClient: '@http_client'
+            $apiUrl: '%symfony_strapi.api_url%'
+            $apiKey: '%symfony_strapi.api_key%'

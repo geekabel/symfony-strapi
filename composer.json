@@ -1,0 +1,28 @@
+{
+    "name": "geekabel/symfony-strapi",
+    "description": "Strapi wrapper symfony",
+    "type": "symfony-bundle",
+    "require": {
+        "php": ">=8.1",
+        "symfony/http-client": "^7.0",
+        "symfony/framework-bundle": "^7.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Geekabel\\SymfonyStrapi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Geekabel\\SymfonyStrapi\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Godwin K.",
+            "email": "koffigodwin96@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
