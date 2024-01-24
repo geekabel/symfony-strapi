@@ -112,6 +112,7 @@ class Client implements ClientInterface
 
     /**
      * Make a filtered GET request to retrieve a list of entries.
+     * 
      *
      * @param string $pluralApiId
      * @param array $filters
@@ -125,5 +126,92 @@ class Client implements ClientInterface
         $url = $this->apiUrl . "/api/{$pluralApiId}?{$this->buildFilters($filters)}";
 
         return $this->request('GET', $url);
+    }
+
+
+    /**
+     * Make a sorted GET request to retrieve a list of entries.
+     *
+     * @param string $pluralApiId
+     * @param string $sortField
+     * @param string $sortOrder
+     *
+     * @return array
+     *
+     * @throws StrapiClientException
+     */
+    public function getEntriesWithSort(string $pluralApiId, string $sortField, string $sortOrder = 'asc'): array
+    {
+        $url = $this->apiUrl . "/api/{$pluralApiId}";
+
+        $options = ['query' => ['sort' => "{$sortField}:{$sortOrder}"]];
+
+        return $this->request('GET', $url, $options);
+    }
+
+    /**
+     * Make a sorted GET request to retrieve a list of entries with multiple sorting fields.
+     *
+     * @param string $pluralApiId
+     * @param array $sortFields
+     *
+     * @return array
+     *
+     * @throws StrapiClientException
+     */
+    public function getEntriesWithMultipleSort(string $pluralApiId, array $sortFields): array
+    {
+        $url = $this->apiUrl . "/api/{$pluralApiId}";
+
+        $sortParams = [];
+
+        foreach ($sortFields as $index => $sortField) {
+            $sortParams[] = "sort[{$index}]={$sortField}";
+        }
+
+        $options = ['query' => $sortParams];
+
+        return $this->request('GET', $url, $options);
+    }
+
+
+    /**
+     * Make a paginated GET request to retrieve a list of entries by page.
+     *
+     * @param string $pluralApiId
+     * @param int $page
+     * @param int $pageSize
+     *
+     * @return array
+     *
+     * @throws StrapiClientException
+     */
+    public function getEntriesByPage(string $pluralApiId, int $page = 1, int $pageSize = 25): array
+    {
+        $url = $this->apiUrl . "/api/{$pluralApiId}";
+
+        $options = ['query' => ['pagination[page]' => $page, 'pagination[pageSize]' => $pageSize]];
+
+        return $this->request('GET', $url, $options);
+    }
+
+    /**
+     * Make a paginated GET request to retrieve a list of entries by offset.
+     *
+     * @param string $pluralApiId
+     * @param int $start
+     * @param int $limit
+     *
+     * @return array
+     *
+     * @throws StrapiClientException
+     */
+    public function getEntriesByOffset(string $pluralApiId, int $start = 0, int $limit = 25): array
+    {
+        $url = $this->apiUrl . "/api/{$pluralApiId}";
+
+        $options = ['query' => ['start' => $start, 'limit' => $limit]];
+
+        return $this->request('GET', $url, $options);
     }
 }
