@@ -72,9 +72,10 @@ class Client implements ClientInterface
 
     public function authenticate(string $identifier, string $password): array
     {
-        if (!$this->getParameter('symfony_strapi.authentication.enabled')) {
-            throw new \LogicException('Authentication is not enabled in the Symfony Strapi client configuration.');
-        }
+        // TODO: Verifier si l'authentification est activé
+        // if (!$this->getParameter('symfony_strapi.authentication.enabled')) {
+        //     throw new \LogicException('Authentication is not enabled in the Symfony Strapi client configuration.');
+        // }
         $url = $this->apiUrl . '/auth/local';
 
         $authData = [
