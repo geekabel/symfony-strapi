@@ -92,4 +92,38 @@ class Client implements ClientInterface
 
         return $this->request('POST', $url, $options);
     }
+
+    /**
+     * @param array $filters
+     * @return string
+     */
+    private function buildFilters(array $filters): string
+    {
+        $filterString = '';
+
+        foreach ($filters as $field => $criteria) {
+            foreach ($criteria as $operator => $value) {
+                $filterString .= "&filters[{$field}][{$operator}]={$value}";
+            }
+        }
+
+        return $filterString;
+    }
+
+    /**
+     * Make a filtered GET request to retrieve a list of entries.
+     *
+     * @param string $pluralApiId
+     * @param array $filters
+     *
+     * @return array
+     *
+     * @throws StrapiClientException
+     */
+    public function getEntriesWithFilters(string $pluralApiId, array $filters): array
+    {
+        $url = $this->apiUrl . "/api/{$pluralApiId}?{$this->buildFilters($filters)}";
+
+        return $this->request('GET', $url);
+    }
 }
